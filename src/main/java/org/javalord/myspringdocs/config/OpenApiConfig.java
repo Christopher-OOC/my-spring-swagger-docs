@@ -8,7 +8,13 @@ import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.media.Content;
+import io.swagger.v3.oas.models.media.MediaType;
+import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
+import org.javalord.myspringdocs.user.dto.response.Response;
+import org.javalord.myspringdocs.user.dto.response.ResponseType;
+import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -64,14 +70,81 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .components(new Components()
-                        .addResponses("Unauthorized", new ApiResponse().description("Unauthorized"))
-                        .addResponses("Forbidden", new ApiResponse().description("Forbidden"))
-                        .addResponses("NotFound", new ApiResponse().description("NotFound"))
-                        .addResponses("Method not allowed", new ApiResponse().description("Method not allowed"))
-                        .addResponses("InternalServerError", new ApiResponse().description("Internal Server Error"))
+                        .addResponses(
+                                "NotFound", new ApiResponse().description("NotFound")
+                                        .content(
+                                                new Content()
+                                                        .addMediaType(
+                                                                "application/json",
+                                                                new MediaType().schema(
+                                                                        new Schema<>().$ref("#/components/schemas/Response")
+                                                                                .example(
+                                                                                        new Response<>(ResponseType.ERROR, "The server is not available at the moment",
+                                                                                                "The server is not available at the moment")
+                                                                                )
+                                                                )
+                                                        )
+                                        )
+
+                        )
+                        .addResponses(
+                                "Unauthorized", new ApiResponse().description("Unauthorized")
+                                        .content(
+                                                new Content()
+                                                        .addMediaType(
+                                                                "application/json",
+                                                                new MediaType().schema(
+                                                                        new Schema<>().$ref("#/components/schemas/Response")
+                                                                                .example(
+                                                                                        new Response<>(ResponseType.ERROR, "The server is not available at the moment",
+                                                                                                "The server is not available at the moment")
+                                                                                )
+                                                                )
+                                                        )
+                                        )
+                        )
+                        .addResponses(
+                                "Forbidden", new ApiResponse().description("Forbidden")
+                                        .content(
+                                                new Content()
+                                                        .addMediaType(
+                                                                "application/json",
+                                                                new MediaType().schema(
+                                                                        new Schema<>().$ref("#/components/schemas/Response")
+                                                                                .example(
+                                                                                        new Response<>(ResponseType.ERROR, "The server is not available at the moment",
+                                                                                                "The server is not available at the moment")
+                                                                                )
+                                                                )
+                                                        )
+                                        )
+                        )
                 );
 
     }
 
+    @Bean
+    public OperationCustomizer operationCustomizer() {
+        return (operation, parameters) -> {
+            operation.getResponses().addApiResponse(
+                    "500",
+                    new ApiResponse().description("Internal Server Error")
+                            .content(
+                                    new Content()
+                                            .addMediaType(
+                                                    "application/json",
+                                                    new MediaType().schema(
+                                                            new Schema<>().$ref("#/components/schemas/Response")
+                                                                    .example(
+                                                                            new Response<>(ResponseType.ERROR, "The server is not available at the moment",
+                                                                                    "The server is not available at the moment")
+                                                                    )
+                                                    )
+                                            )
+                            )
+            );
 
+            return operation;
+        };
+    }
 }

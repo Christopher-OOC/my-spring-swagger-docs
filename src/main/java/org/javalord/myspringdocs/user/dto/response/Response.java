@@ -6,6 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
+@Schema(name = "Response")
 public class Response<T> {
 
     @Schema(defaultValue = "SUCCESS", allowableValues = {"SUCCESS", "ERROR"})

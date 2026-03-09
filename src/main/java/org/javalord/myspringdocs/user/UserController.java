@@ -27,24 +27,24 @@ public class UserController {
             summary = "Create new user",
             description = "Endpoint to create a new user"
     )
-    @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "User created successfully",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = User.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "Internal server error",
-                    content = @Content()
-            )
-    })
+//    @ApiResponses(value = {
+//            @ApiResponse(
+//                    responseCode = "400",
+//                    description = "User created successfully",
+//                    content = @Content(
+//                            mediaType = "application/json",
+//                            schema = @Schema(implementation = User.class)
+//                    )
+//            ),
+//            @ApiResponse(
+//                    responseCode = "500",
+//                    description = "Internal server error",
+//                    content = @Content()
+//            )
+//    })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<Response<String>> createUser(@RequestBody @Valid CreateUserRequest request) {
+    public ResponseEntity<Response<String>> createUser(@Valid @RequestBody CreateUserRequest request) {
         userService.createUser(request);
 
         Response<String> response = new Response<>(
