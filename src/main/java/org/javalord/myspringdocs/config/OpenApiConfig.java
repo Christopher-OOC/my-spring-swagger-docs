@@ -79,8 +79,8 @@ public class OpenApiConfig {
                                                                 new MediaType().schema(
                                                                         new Schema<>().$ref("#/components/schemas/Response")
                                                                                 .example(
-                                                                                        new Response<>(ResponseType.ERROR, "The server is not available at the moment",
-                                                                                                "The server is not available at the moment")
+                                                                                        new Response<>(ResponseType.ERROR, "Resource not found",
+                                                                                                "Not found")
                                                                                 )
                                                                 )
                                                         )
@@ -96,8 +96,8 @@ public class OpenApiConfig {
                                                                 new MediaType().schema(
                                                                         new Schema<>().$ref("#/components/schemas/Response")
                                                                                 .example(
-                                                                                        new Response<>(ResponseType.ERROR, "The server is not available at the moment",
-                                                                                                "The server is not available at the moment")
+                                                                                        new Response<>(ResponseType.ERROR, "You need to login",
+                                                                                                "Please login again")
                                                                                 )
                                                                 )
                                                         )
@@ -112,8 +112,8 @@ public class OpenApiConfig {
                                                                 new MediaType().schema(
                                                                         new Schema<>().$ref("#/components/schemas/Response")
                                                                                 .example(
-                                                                                        new Response<>(ResponseType.ERROR, "The server is not available at the moment",
-                                                                                                "The server is not available at the moment")
+                                                                                        new Response<>(ResponseType.ERROR, "Not authorized to perform this operation",
+                                                                                                "Unauthorized")
                                                                                 )
                                                                 )
                                                         )
