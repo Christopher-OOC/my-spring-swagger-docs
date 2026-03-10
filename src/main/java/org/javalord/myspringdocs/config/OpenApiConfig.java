@@ -12,15 +12,11 @@ import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
-import org.javalord.myspringdocs.swagger.SwaggerValidationErrorResponse;
 import org.javalord.myspringdocs.util.Response;
 import org.javalord.myspringdocs.util.ResponseType;
-import org.javalord.myspringdocs.util.ValidationError;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
 
 @Configuration
 @OpenAPIDefinition(
@@ -56,16 +52,6 @@ import java.util.List;
                         url = "http://localhost:8080",
                         description = "Local development server"
                 )
-        },
-        tags = {
-                @Tag(
-                        name = "User",
-                        description = "APIs for user endpoints"
-                ),
-                @Tag(
-                        name = "Message",
-                        description = "APIs for message endpoints"
-                )
         }
 )
 public class OpenApiConfig {
@@ -74,6 +60,23 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .components(new Components()
+                        .addResponses(
+                                "BadRequest", new ApiResponse().description("BadRequest")
+                                        .content(
+                                                new Content()
+                                                        .addMediaType(
+                                                                "application/json",
+                                                                new MediaType().schema(
+                                                                        new Schema<>().$ref("#/components/schemas/Response")
+                                                                                .example(
+                                                                                        new Response<>(ResponseType.ERROR, "Incorrect input",
+                                                                                                "Bad Request")
+                                                                                )
+                                                                )
+                                                        )
+                                        )
+
+                        )
                         .addResponses(
                                 "NotFound", new ApiResponse().description("NotFound")
                                         .content(

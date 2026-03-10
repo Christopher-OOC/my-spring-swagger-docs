@@ -15,6 +15,7 @@ import org.javalord.myspringdocs.util.Response;
 import org.javalord.myspringdocs.util.ResponseType;
 import org.javalord.myspringdocs.user.dto.response.UserResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,16 +32,16 @@ public class UserController {
             description = "Endpoint to create a new user"
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "400", ref = "#/components/responses/SingleBadRequest"),
             @ApiResponse(
-                    responseCode = "404",
+                    responseCode = "400",
+                    description = "Bad request",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = SwaggerValidationErrorResponse.class)
                     ))
     })
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response<String>> createUser(@Valid @RequestBody CreateUserRequest request) {
         userService.createUser(request);
 
