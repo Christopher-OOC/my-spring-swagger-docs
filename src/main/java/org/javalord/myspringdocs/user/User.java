@@ -32,8 +32,8 @@ public class User {
     private String lastName;
 
     @CreatedDate
-    @Column(nullable = false, updatable = false, insertable = false)
-    private LocalDate createdDate;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
     @Column(insertable = false)

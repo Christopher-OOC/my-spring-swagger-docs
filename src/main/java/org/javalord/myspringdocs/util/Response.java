@@ -1,4 +1,4 @@
-package org.javalord.myspringdocs.user.dto.response;
+package org.javalord.myspringdocs.util;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -10,14 +10,14 @@ import java.time.LocalDateTime;
 public class Response<T> {
 
     @Schema(defaultValue = "SUCCESS", allowableValues = {"SUCCESS", "ERROR"})
-    private ResponseType status;
+    protected ResponseType status;
 
     @Schema(example = "Operation successful")
-    private String message;
+    protected String message;
 
-    private T data;
+    protected T data;
 
-    private LocalDateTime timestamp;
+    protected LocalDateTime timestamp;
 
     protected Response() {
 

@@ -1,3 +1,9 @@
 spring:
   application:
     name: my-spring-docs
+  h2:
+    console:
+      enabled: true
+  datasource:
+    generate-unique-name: false
+    name: test_db

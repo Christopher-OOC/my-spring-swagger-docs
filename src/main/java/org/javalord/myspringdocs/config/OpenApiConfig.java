@@ -12,30 +12,34 @@ import io.swagger.v3.oas.models.media.Content;
 import io.swagger.v3.oas.models.media.MediaType;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
-import org.javalord.myspringdocs.user.dto.response.Response;
-import org.javalord.myspringdocs.user.dto.response.ResponseType;
+import org.javalord.myspringdocs.swagger.SwaggerValidationErrorResponse;
+import org.javalord.myspringdocs.util.Response;
+import org.javalord.myspringdocs.util.ResponseType;
+import org.javalord.myspringdocs.util.ValidationError;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
                 title = "My OpenAPI Docs",
                 description = """
-                                This is a sample Pet Store Server based on the OpenAPI 3.1 specification.
-                             
-                                You can find out more about Swagger here:
-                                <a href="https://swagger.io" target="_blank">https://swagger.io</a>
-                                
-                                In the third iteration of the Pet Store, we've switched to a design-first approach.
-                                You can help improve the API by making changes to the definition or contributing to the code.
-                                
-                                Some useful links:
-                                
-                                - [Pet Store Repository](https://github.com/swagger-api/swagger-petstore)
-                                - [OpenAPI Definition](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
-                                """,
+                        This is a sample Pet Store Server based on the OpenAPI 3.1 specification.
+                        
+                        You can find out more about Swagger here:
+                        <a href="https://swagger.io" target="_blank">https://swagger.io</a>
+                        
+                        In the third iteration of the Pet Store, we've switched to a design-first approach.
+                        You can help improve the API by making changes to the definition or contributing to the code.
+                        
+                        Some useful links:
+                        
+                        - [Pet Store Repository](https://github.com/swagger-api/swagger-petstore)
+                        - [OpenAPI Definition](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+                        """,
                 termsOfService = "https://github.com/Christopher-OOC",
                 contact = @Contact(
                         name = "Olojede Olamide",

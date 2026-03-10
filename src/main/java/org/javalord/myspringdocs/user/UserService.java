@@ -7,4 +7,6 @@ public interface UserService {
 
 
     void createUser(CreateUserRequest request);
+
+    UserResponse findById(long userId);
 }

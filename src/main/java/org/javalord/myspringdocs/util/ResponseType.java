@@ -1,4 +1,4 @@
-package org.javalord.myspringdocs.user.dto.response;
+package org.javalord.myspringdocs.util;
 
 public enum ResponseType {
 
