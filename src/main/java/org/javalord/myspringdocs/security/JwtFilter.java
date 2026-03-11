@@ -11,14 +11,13 @@ import org.javalord.myspringdocs.user.User;
 import org.javalord.myspringdocs.user.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Service
+@Component
 @RequiredArgsConstructor
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
@@ -34,20 +33,23 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        String jwtToken = authHeader.replace("Bearer ", "");
+        String jwtToken = authHeader.substring(7);
 
         if(!this.jwtService.isJwtValid(jwtToken)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        String email = jwtService.retrieveEmail(jwtToken);
+        String email = this.jwtService.extractEmail(jwtToken);
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             User user = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new BusinessException("USER_NOT_FOUND"));
+                    .orElseThrow(() -> {
+                        log.error("User not found with email {}", email);
+                        return new BusinessException("USER_NOT_FOUND");
+                    });
 
-            var details = new WebAuthenticationDetails(request);
+            var details = new WebAuthenticationDetailsSource().buildDetails(request);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             authentication.setDetails(details);
